@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import path from "path";
-import userList from "./Models/contactSchema.js";
+import userList from "./Models/ContactSchema.js";
 
 import { fileURLToPath } from "url";
 

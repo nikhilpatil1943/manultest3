@@ -129,7 +129,7 @@
     }
     .Ourservices__card:nth-child(3){
         bottom: 4%;
-        left: 10%;
+        left: 5%;
         flex-direction: column-reverse;
     }
     .Ourservices__card:nth-child(3) .Ourservices__content{

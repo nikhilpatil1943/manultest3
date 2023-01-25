@@ -1,13 +1,13 @@
 import express from "express";
 import bodyParser from "body-parser";
-import nodemailer from "nodemailer"
+import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import path from "path";
 import userList from "./Models/contactSchema.js";
 
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,60 +18,59 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 dotenv.config();
 
-app.use(express.static(path.join(__dirname,"./client/build")));
+app.use(express.static(path.join(__dirname, "./client/build")));
 
-app.get("*",(_,res)=>{
-  res.sendFile(path.join(__dirname,"./client/build/index.html"),(err)=>res.status(500).send(err));
-})
+app.get("*", (_, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"), (err) =>
+    res.status(500).send(err)
+  );
+});
 // Routes
-app.post("/contactus", async (req, res) => { 
-    try {
-        const { name, email, phone } = req.body
-        if (!name && !phone && !email) {
-            return res.status(400).send("Enter all Required Fields")
-        }
-        
-        const result = await userList.create({
-            phone,
-            name,
-            email
-        });
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'thefoodiebeecontact@gmail.com',
-                pass: process.env.PASSWORD
-            }
-        });
-    
-        const mailOptions = {
-            from: 'thefoodiebeecontact@gmail.com',
-            to: 'manul@thefoodiebee.com',
-            subject: name,
-            text: `name : ${name} Phone : ${phone} email : ${email}`,
-            headers: {
-                'X-Laziness-level': 1000
-            }
-        };
-        
-    
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log(error);
-                return res.status(500).send('Server error')
-            } else {
-                console.log(`Email sent: ${info.response}`);
-                return res.status(200).send("mail successfully sent")
-            }
-        });
-    } catch (error) {
-        console.log(error)
-        res.status(500).send("server error")
-     }
-    
+app.post("/contactus", async (req, res) => {
+  try {
+    const { name, email, phone } = req.body;
+    if (!name && !phone && !email) {
+      return res.status(400).send("Enter all Required Fields");
+    }
 
-   
-} );
+    const result = await userList.create({
+      phone,
+      name,
+      email,
+    });
+    console.log(result);
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "thefoodiebeecontact@gmail.com",
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: "thefoodiebeecontact@gmail.com",
+      to: "shreeramshanmugasundaram1@gmail.com, manul@thefoodiebee.com",
+      subject: name,
+      text: `Name : ${name} Phone : ${phone} Email : ${email}`,
+      headers: {
+        "X-Laziness-level": 1000,
+      },
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send("Server error");
+      } else {
+        console.log(`Email sent: ${info.response}`);
+        return res.status(200).send("mail successfully sent");
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("server error");
+  }
+});
 
 const PORT = process.env.PORT || 5000;
 const DB = process.env.DB;

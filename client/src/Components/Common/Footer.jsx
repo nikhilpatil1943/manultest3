@@ -35,6 +35,9 @@ const Footer = () => {
         </a> */}
 
         {/* <button className="Footer__btn">Mail us</button> */}
+        <a className="Footer__mailto" href="mailto:someone@example.com">
+          Mail us
+        </a>
       </div>
       <div className="Footer__text">
         <i className="fa-solid fa-copyright"></i>

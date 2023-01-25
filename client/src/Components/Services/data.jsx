@@ -13,9 +13,9 @@ export const Service1 = () => {
         <p>
           We provide simple and classy Personal website & QR code-based ordering
           system that allows customers to scan the code with their smartphones,
-          view the menu, and place an order directly from their Website updates
-          2 device. Additionally, you will have about us, gallery page and
-          testimonials on your personal website.
+          view the menu, and place an order directly from device. Additionally,
+          you will have about us, gallery page and testimonials on your personal
+          website.
         </p>
         <ol>
           <li>This streamlines the ordering process</li>
